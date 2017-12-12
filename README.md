@@ -17,6 +17,24 @@
  * **No restrictions** on project folder layout.
  * Loading JavaCard applets is equally pleasing with **[GlobalPlatformPro](https://github.com/martinpaljak/GlobalPlatformPro)**
 
+## Maven repository
+
+This is Ph4r05 build:
+
+```xml
+<dependency>
+  <groupId>com.klinec</groupId>
+  <artifactId>ant-javacard</artifactId>
+  <version>1.8.0</version>
+</dependency>
+```
+
+Gradle:
+
+```groovy
+compile group: 'com.klinec', name: 'ant-javacard', version: '1.8.0'
+```
+
 ## Download & Use
  * Download [`ant-javacard.jar`](https://github.com/martinpaljak/ant-javacard/releases/download/v1.8/ant-javacard.jar) (be sure to get the [latest version](https://github.com/martinpaljak/ant-javacard/releases/latest))
  * Or use the download task:
