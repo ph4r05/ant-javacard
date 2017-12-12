@@ -6,3 +6,8 @@ hs_err_pid*
 /bin/
 /*.jar
 /lib/
+build/
+.gradle
+bin/
+.idea
+*.iml
