@@ -261,21 +261,30 @@ public class JavaCard extends Task {
 			}
 		}
 
-		/** Many applets inside one package */
+		/**
+		 * Many applets inside one package
+		 * @return applet
+		 */
 		public JCApplet createApplet() {
 			JCApplet applet = new JCApplet();
 			raw_applets.add(applet);
 			return applet;
 		}
 
-		/** Many imports inside one package */
+		/**
+		 * Many imports inside one package
+		 * @return import
+		 */
 		public JCImport createImport() {
 			JCImport imp = new JCImport();
 			raw_imports.add(imp);
 			return imp;
 		}
 
-		/** Many imports inside one package - jimport to avoid conflict with gradle / groovy keyword */
+		/**
+		 * Many imports inside one package - jimport to avoid conflict with gradle / groovy keyword
+		 * @return import
+		 */
 		public JCImport createJimport() {
 			return this.createImport();
 		}
