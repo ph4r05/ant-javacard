@@ -1,0 +1,162 @@
+group 'com.klinec'
+version '1.8.0'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = 1.8
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+            exclude 'testapplets/**'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'sdks'
+    }
+}
+
+dependencies {
+    compile group: 'org.apache.ant', name: 'ant', version: '1.8.2'
+}
+
+def siteUrl = 'https://github.com/ph4r05/ant-javacard'
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc {
+        failOnError = false
+    }
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+archivesBaseName = 'ant-javacard'
+
+// When uploading setup your ~/.gradle/gradle.properties
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'ant-javacard'
+                packaging 'jar'
+
+                description 'ANT task for JavaCard build, ph4r05 fork'
+                url siteUrl
+
+                scm {
+                    connection 'scm:git:git://github.com/ph4r05/ant-javacard'
+                    developerConnection 'scm:git:git@github.com:ph4r05/ant-javacard.git'
+                    url siteUrl
+                }
+
+                licenses {
+                    license {
+                        name 'MIT'
+                        url 'https://raw.githubusercontent.com/ph4r05/ant-javacard/master/LICENSE'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'ph4r05'
+                        name 'Dusan Klinec'
+                        email 'dusan.klinec@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+}
+
+task(caps, dependsOn: jar) {
+    doLast {
+        final def curProjectDir = projectDir.absolutePath
+        ant.taskdef(name: 'javacard',
+                classname: 'pro.javacard.ant.JavaCard',
+                classpath: fileTree(dir: 'build/libs/', include: '*.jar').files[0].toString()
+        )
+
+        ant.javacard {
+            cap(jckit: curProjectDir + '/sdks/jc212_kit',
+                    output: 'xEmpty212.cap',
+                    sources: curProjectDir + '/src/testapplets/empty')
+                    {
+                        applet(class: 'testapplets.empty.Empty', aid: '0102030405060708');
+                    }
+
+            cap(jckit: curProjectDir + '/sdks/jc221_kit',
+                    output: 'xEmpty221.cap',
+                    sources: curProjectDir + '/src/testapplets/empty')
+                    {
+                        applet(class: 'testapplets.empty.Empty', aid: '0102030405060708');
+                    }
+
+            cap(jckit: curProjectDir + '/sdks/jc222_kit',
+                    output: 'xEmpty222.cap',
+                    sources: curProjectDir + '/src/testapplets/empty')
+                    {
+                        applet(class: 'testapplets.empty.Empty', aid: '0102030405060708');
+                    }
+
+            cap(jckit: curProjectDir + '/sdks/jc303_kit',
+                    output: 'xEmpty303.cap',
+                    sources: curProjectDir + '/src/testapplets/empty')
+                    {
+                        applet(class: 'testapplets.empty.Empty', aid: '0102030405060708');
+                    }
+
+            cap(jckit: curProjectDir + '/sdks/jc304_kit',
+                    output: 'xEmpty304.cap',
+                    sources: curProjectDir + '/src/testapplets/empty')
+                    {
+                        applet(class: 'testapplets.empty.Empty', aid: '0102030405060708');
+                    }
+
+            cap(jckit: curProjectDir + '/sdks/jc305u1_kit',
+                    output: 'xEmpty305.cap',
+                    sources: curProjectDir + '/src/testapplets/empty')
+                    {
+                        applet(class: 'testapplets.empty.Empty', aid: '0102030405060708');
+                    }
+
+            cap(jckit: curProjectDir + '/sdks/jc304_kit',
+                    output: 'xEmptyInt304.cap',
+                    sources: curProjectDir + '/src/testapplets/integer',
+                    ints: true)
+                    {
+                        applet(class: 'testapplets.integer.EmptyInt', aid: '0102030405060708');
+                    }
+        }
+    }
+}
+
