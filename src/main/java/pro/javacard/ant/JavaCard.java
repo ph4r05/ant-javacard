@@ -164,6 +164,33 @@ public final class JavaCard extends Task {
         }
     }
 
+    public static String join(Collection col, String glue){
+        return join(col, glue, null, null);
+    }
+
+    public static String join(Collection col, String glue, String prefix, String suffix){
+        final int size = col.size();
+        final StringBuilder bld = new StringBuilder();
+        if (prefix != null){
+            bld.append(prefix);
+        }
+
+        int ctr = -1;
+        for(Object obj : col){
+            ctr += 1;
+            bld.append(obj.toString());
+            if (ctr - 1 < size){
+                bld.append(glue);
+            }
+        }
+
+        if (suffix != null){
+            bld.append(suffix);
+        }
+
+        return bld.toString();
+    }
+
     @SuppressWarnings("serial")
     public static class HelpingBuildException extends BuildException {
         public HelpingBuildException(String msg) {
@@ -494,11 +521,8 @@ public final class JavaCard extends Task {
             j.createArg().setLine("-classdir '" + classes_path + "'");
 
             // construct export path
-            StringJoiner expstringbuilder = new StringJoiner(File.pathSeparator);
-            for (File imp : exps) {
-                expstringbuilder.add(imp.toString());
-            }
-            j.createArg().setLine("-exportpath '" + expstringbuilder.toString() + "'");
+            final String paths = join(exps, File.pathSeparator);
+            j.createArg().setLine("-exportpath '" + paths + "'");
 
             // always be a little verbose
             j.createArg().setLine("-verbose");
