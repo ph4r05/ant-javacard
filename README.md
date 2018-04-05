@@ -2,14 +2,14 @@
 
 **Easy to use [Ant](https://ant.apache.org/) task** for building JavaCard CAP files in a declarative way.
 
-[![Build status](https://travis-ci.org/martinpaljak/ant-javacard.svg?branch=master)](https://travis-ci.org/martinpaljak/ant-javacard) &nbsp; [![Coverity](https://scan.coverity.com/projects/8418/badge.svg)](https://scan.coverity.com/projects/martinpaljak-ant-javacard) &nbsp; [![Latest release](https://img.shields.io/github/release/martinpaljak/ant-javacard.svg)](https://github.com/martinpaljak/ant-javacard/releases/latest)
+[![Build status](https://travis-ci.org/martinpaljak/ant-javacard.svg?branch=master)](https://travis-ci.org/martinpaljak/ant-javacard) &nbsp; [![Coverity](https://scan.coverity.com/projects/8418/badge.svg)](https://scan.coverity.com/projects/martinpaljak-ant-javacard) &nbsp; [![Latest release](https://img.shields.io/github/release/martinpaljak/ant-javacard.svg)](https://github.com/martinpaljak/ant-javacard/releases/latest) &nbsp; [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.martinpaljak/ant-javacard/badge.svg)](https://mvnrepository.com/artifact/com.github.martinpaljak/ant-javacard) &nbsp; [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/martinpaljak/ant-javacard/blob/master/LICENSE)
 
 ## Features
- * **[Do What I Mean](http://en.wikipedia.org/wiki/DWIM)**.
+ * **[Do What I Mean](http://en.wikipedia.org/wiki/DWIM)**. You will [love it](#happy-users)!
  * **No dependencies**, no extra or unrelated downloads. Just **a 14KB jar**.
  * Supports **all available JavaCard SDK versions**: 2.1.2, 2.2.1, 2.2.2, 3.0.3, 3.0.4 and 3.0.5
    * Get one from [oracle.com](http://www.oracle.com/technetwork/java/embedded/javacard/downloads/javacard-sdk-2043229.html) or use the [handy Github repository](https://github.com/martinpaljak/oracle_javacard_sdks)
- * **Works on all platforms** with Java 1.7+: Windows, OSX, Linux.
+ * **Works on all platforms** with Java 1.8: Windows, OSX, Linux.
  * Almost **everything integrates** or works with Ant.
  * Can be easily integrated into **continuous integration** workflows.
  * Generates CAP files from **sources** or **pre-compiled** class files.
@@ -36,10 +36,11 @@ compile group: 'com.klinec', name: 'ant-javacard', version: '1.8.0'
 ```
 
 ## Download & Use
- * Download [`ant-javacard.jar`](https://github.com/martinpaljak/ant-javacard/releases/download/v1.8/ant-javacard.jar) (be sure to get the [latest version](https://github.com/martinpaljak/ant-javacard/releases/latest))
+ * Download [`ant-javacard.jar`](https://github.com/martinpaljak/ant-javacard/releases/download/18.01.17/ant-javacard.jar) (be sure to get the [latest version](https://github.com/martinpaljak/ant-javacard/releases/latest))
+   * The **only** supported Java version for all SDK targets is 1.8!
  * Or use the download task:
 ```xml
-<get src="https://github.com/martinpaljak/ant-javacard/releases/download/v1.8/ant-javacard.jar" dest="." skipexisting="true"/>
+<get src="https://github.com/martinpaljak/ant-javacard/releases/download/18.01.17/ant-javacard.jar" dest="." skipexisting="true"/>
 ```
  * Then add the following to your `build.xml` file:
 ```xml
@@ -86,6 +87,7 @@ Details:
    * `aid` attribute - AID (hex) of the package. Recommended - or set to the 5 first bytes of the applet AID if left unspecified.
    * `output` attribute - path where to save the generated CAP file. Required.
    * `export` attribtue - path (folder) where to place the JAR and generated EXP file. Optional.
+   * `jar` attribute - path where to save the generated archive JAR file. Optional.
    * `jca` attribute - path where to save the generated JavaCard Assembly (JCA) file. Optional.
    * `verify` attribute - if set to false, disables verification of the resulting CAP file with offcardeverifier. Optional.
    * `debug` attribute - if set to true, generates debug CAP components. Optional.
@@ -104,12 +106,24 @@ Notes:
  * [MIT](./LICENSE)
 
 ## Happy users
- * [IsoApplet](https://github.com/philipWendland/IsoApplet) by [@philipWendland](https://github.com/philipWendland)
- * [NdefApplet](https://github.com/promovicz/javacard-ndef) by [@promovicz](https://github.com/promovicz)
- * [GidsApplet](https://github.com/vletoux/GidsApplet) by [@vletoux](https://github.com/vletoux)
- * [LedgerWalletApplet](https://github.com/LedgerHQ/ledger-javacard) by [@LedgerHQ](https://github.com/LedgerHQ)
- * [KeePassNFC](https://github.com/nfd/smartcard_crypto_applet)
- * You! Don't torture yourself with complexity, KISS!
+A random list of users, with a public link:
+* Applets:
+  * [IsoApplet](https://github.com/philipWendland/IsoApplet) by [@philipWendland](https://github.com/philipWendland)
+  * [NdefApplet](https://github.com/promovicz/javacard-ndef) by [@promovicz](https://github.com/promovicz)
+  * [GidsApplet](https://github.com/vletoux/GidsApplet) by [@vletoux](https://github.com/vletoux)
+  * [LedgerWalletApplet](https://github.com/LedgerHQ/ledger-javacard) by [@LedgerHQ](https://github.com/LedgerHQ)
+  * [KeePassNFC](https://github.com/nfd/smartcard_crypto_applet) by [@nfd](https://github.com/nfd)
+  * [PivApplet](https://github.com/arekinath/PivApplet) (PIV) by [@arekinath](https://github.com/arekinath)
+  * [OpenFIP201](https://github.com/makinako/OpenFIPS201) (PIV) by [@makinako](https://github.com/makinako)
+  * [Cryptonit](https://github.com/mbrossard/cryptonit-applet) (PIV) by [@mbrossard](https://github.com/mbrossard)
+  * [HTOP NDEF](https://github.com/petrs/hotp_via_ndef) by [@petrs](https://github.com/petrs)
+  * [Yubikey OTP](https://github.com/arekinath/YkOtpApplet) by [@arekinath](https://github.com/arekinath)
+  * Plus loads of academic projects, classes and papers.
+* Integration projects:
+  * [JavaCard Gradle plugin](https://github.com/bertrandmartel/javacard-gradle-plugin) by [@bertrandmartel](https://github.com/bertrandmartel)
+  * [JavaCard Template project with Gradle](https://github.com/ph4r05/javacard-gradle-template) by [@ph4r05](https://github.com/ph4r05)
+* Other:
+  * **You!** Don't torture yourself with complexity, **KISS!**
 
 ## Contact
  * See [javacard.pro](https://javacard.pro)
@@ -119,6 +133,8 @@ Notes:
    * :( as cumbersome to use as the command line utilities
    * :( not declarative/DWIM enough
    * :) very explicit interface with all details exposed
+ * JavaCard Gradle plugin (MIT) - https://github.com/bertrandmartel/javacard-gradle-plugin
+   * :) Wraps ant-javacard for use with Gradle
  * gradle-javacard (Apache 2.0) - https://github.com/fidesmo/gradle-javacard
    * :) nice declarative interface
    * :( requires gradle (40M download) 
